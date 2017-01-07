@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.ahmed.jokemachine"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        free {
+            applicationId "com.ahmed.jokemachine.free"
+        }
+        paid {
+            applicationId "com.ahmed.jokemachine.paid"
+        }
+    }
+}
+
+
+dependencies {
+
+    // test
+    testCompile 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+
+    // normal
+    compile( project(path: ':backend', configuration: 'android-endpoints')){
+        exclude group: 'com.google.guava'
+    }
+    compile (project(':jokeshower')){
+        exclude group: 'com.google.guava'
+    }
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.jakewharton:butterknife-compiler:8.4.0'
+    freeCompile 'com.google.android.gms:play-services-ads:10.0.1'
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+
+}
